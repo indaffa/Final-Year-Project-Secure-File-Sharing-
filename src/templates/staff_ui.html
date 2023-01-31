@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<h3 style="text-align: center;">Hello {{session['username']}}<br>Staff UI</h3>
+	
+<style>
+#status_icon{
+  position: absolute;
+  top: 61px;
+  right: 200px;
+  width:100px;
+  align-content: right;
+}
+
+</style>
+</head>
+<body>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+rel="stylesheet"
+integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+crossorigin="anonymous">
+<link rel="stylesheet" href={{url_for('static', filename='css/background.css') }}>
+<!-- <link rel="stylesheet" href={{url_for('static', filename='css/a.css') }}> -->
+<div class="container">
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-danger alert-dismissible fade show">
+      <button type="button" class="btn-close" data-bs-dismiss="alert"
+      aria-label="Close"></button>
+      {{ message }}
+  </div>
+  {% endfor %}
+</div>
+  <form action="/file_upload" method="POST" enctype="multipart/form-data">
+    {{ form.csrf_token() }}
+    <div>
+      {{ form.file_name.label }}
+    </div>
+    <div>
+      {{ form.file_name}}
+    </div>
+    <div>
+      {{ form.upload}}
+      <!-- {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul class=flashes>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}<br> -->
+    </div>
+    <!-- <label for="fname">File Name:</label>
+    <input type="text" name="filename" id="filename"></br></br>
+    <input type="file" id="myFile" name="myfile"></br></br>
+    <input type="submit" value="upload"> -->
+    <div>
+      {{ form.submit(class="button")}}
+    </div>
+  </form>
+
+  <div id="status_icon">
+    <table>
+      <p>Cloud Status<br></p>
+      <td>
+        <p>GOOGLE<br></p>
+        {% if g_stat == 'connected' %}
+        <p>&#128994;</p>
+        {% else %}
+        <p>&#128308;</p>
+        {% endif %}
+      </td>
+      <td>
+        <p>AWS<br></p>
+        {% if a_stat == 'connected' %}
+        <p>&#128994;</p>
+        {% else %}
+        <p>&#128308;</p>
+        {% endif %}
+      </td>
+      <td>
+        <p>FIREBASE<br></p>
+        {% if f_stat == 'connected' %}
+        <p>&#128994;</p>
+        {% else %}
+        <p>&#128308;</p>
+        {% endif %}
+      </td>
+    </table> 
+  </div>
+ 
+  {% if files|length < 1 %}
+  <h3 style="text-align: center;">There are no files</h3>
+  {% else %}
+  
+  <h3 style="text-align: center;">List of Dept {{session['dept']}} Files</h3>
+  <table align="center" id="fileList">
+      <tr>
+          <th>Owner</th>
+          <th>File Name</th>
+          <th>Date Created</th>
+          <th>Last Modified</th>
+		  <th>Edit</th>
+		  <th>Delete</th>
+          <th>View</th>
+      </tr>
+      {% for file in files%}<br>
+      <tr>
+          <td>{{ file.owner }}</td>
+          <td>{{ file.name }}</td>
+          <td>{{ file.date_created }}</td>
+          <td>{{ file.last_modified }}</td>
+		  <td>
+        {% if file.owner == session['username'] %}
+        <form action="/edit">
+          <input type=hidden name=name value="{{file.code_name}}">
+          <input class="button" type="submit" value="Edit">
+        </form>
+      {% endif %}
+		  </td>
+		  <td>
+        {% if file.owner == session['username'] %}
+        <form action="/delete">
+          <input type=hidden name=name value="{{file.code_name}}">
+          <input class="button" type="submit" value="Delete">
+        </form>
+        {% endif %}
+		  </td>
+          <td>
+            <form target="_blank" action="/view#toolbar=0" method="POST">
+              <input type=hidden name=name value="{{file.code_name}}">
+              <input type=hidden name=packetsize value="{{file.packet_size}}">
+              <input class="button" type="submit" value="View">
+
+            </form>
+            <!-- <a href="/view?name={{file.name}}&packetsize={{file.packet_size}}#toolbar=0" target="_blank">View</a> -->
+          </td>
+      </tr>
+      {%endfor%}<br>
+    </table>
+    {% endif %}<br>
+  
+    <form action="/logout">
+      <input class="button" type="submit" value="logout">
+  </form>
+</body>
+</html>
+

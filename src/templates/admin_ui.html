@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>ADMIN UI</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<h3 style="text-align: center;">Hello {{session['username']}}<br>ADMIN UI</h3>
+
+</head>
+
+
+<body>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+rel="stylesheet"
+integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+crossorigin="anonymous">
+<link rel="stylesheet" href={{url_for('static', filename='css/background.css') }}>
+
+    <form action="/admin/add_user" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required>
+        </br></br>
+        <label for="username">Password:</label>
+        <input type="text" name="password" id="password" required>
+        </br></br>
+
+        <label for="dept">Department:</label>
+        <select id="dept" name="dept">
+		<option hidden disabled selected>--Select a department--</option>
+          {% for dept in department %}
+            <option value="{{dept.dept}}">{{dept.dept}}</option>
+          {%endfor%}
+          </select>
+
+        <label for="role">Role:</label>
+          <select id="role" name="role">
+		  <option hidden disabled selected>--Select a role--</option>
+          <option value="admin">Admin</option>
+          <option value="staff">Staff</option>
+          <option value="manager">Manager</option>
+          <option value="director">Director</option>
+          </select>
+        </br></br>
+        <button class="button" type="submit">Add New User</button>
+    </form>
+    <p><strong>Action Message:</strong> {{action_msg}}</p>
+
+    {% if user_list|length < 1 %}
+    <h3 style="text-align: center;">User Management System</h3>
+    {% endif %}
+	<form action="/showDepartment">
+		<input class="button" type="submit" value="Show Department">
+	</form>
+    <h3 style="text-align: center;">List of Users</h3>
+    <table align="center" id="users">
+  
+        <tr>
+            <th>ID</th>
+            <th>username</th>
+            <th>Password</th>
+            <th>Department</th>
+            <th>Role</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        {% for user in user_list %}<br>
+        <tr>
+          <td id="user.id">{{ user.id }}</td>
+          <td id="user.username">{{ user.username }}</td>
+          <td id="user.password">{{ user.password }}</td>
+          <td id="user.dept">{{user.dept}}</td>
+          <td id="user.role">{{ user.role }}</td>
+          <form action = "/admin/edit_UI" method="POST">
+          <td>
+            <button class="button" type="submit" name="edit_user" value="{{ user.id }}">Edit</button>
+          </td>
+          </form>
+          <form action = "/admin/del_user" method="POST">
+          <td>
+            <button class="button" type="submit" name="del_user" value="{{ user.id }}">Delete</button>
+          </td>
+          </form>
+        </tr>
+        {%endfor%}
+    </table>
+    <form action="/logout">
+      <input class="button" type="submit" value="logout">
+  </form>
+ </body>
+</html>

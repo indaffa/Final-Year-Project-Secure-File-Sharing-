@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<h3 style="text-align: center;">Hello {{session['username']}}<br>Admin UI</h3>
+	
+<style>
+
+
+#status_icon{
+  position: fixed;
+  top: 61px;
+  right: 200px;
+  width:100px;
+  align-content: right;
+}
+
+</style>
+</head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+rel="stylesheet"
+integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+crossorigin="anonymous">
+<link rel="stylesheet" href={{url_for('static', filename='css/background.css') }}>
+<body>
+    <div class="container">
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"
+            aria-label="Close"></button>
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    <!-- {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <script>
+      var messages = "{{ messages | safe }}";
+      alert(messages)
+    </script>
+  {% endif %}
+{% endwith %} -->
+  <form action="/addDepartment" method="POST">
+    {{ form.csrf_token() }}
+    <div>
+      {{ form.department_name.label }}
+    </div>
+    <div>
+      {{ form.department_name}}
+      <!-- {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}<br> -->
+    </div>
+
+      {{ form.submit(class="button")}}
+    </div>
+  </form>
+
+  {% if department|length < 1 %}
+  <h3 style="text-align: center;">There are no department</h3>
+  {% else %}
+<form action="/admin">
+	<input class="button" type="submit" value="Back to Admin UI">
+</form>
+  <table align="center">
+  <h3 style="text-align: center;">List of Department</h3>
+      <tr>
+          <th>Department Name</th>
+		  <th>Edit</th>
+		  <th>Delete</th>
+      </tr>
+      {% for dept in department %}<br>
+      <tr>
+          <td>{{ dept.dept }}</td>
+       <td>
+        <form action="/editDepartment">
+          <input type=hidden name=id value="{{dept.id}}">
+          <input type=hidden name=name value="{{dept.dept}}">
+          <input class="button" type="submit" value="Edit">
+        </form>
+		  </td>
+		  <td>
+        <form action="/deleteDepartment">
+          <input class="button" type=hidden name=name value="{{dept.dept}}">
+          <input class="button" type="submit" value="Delete">
+        </form>
+          </td>
+      </tr>
+      {%endfor%}<br>
+    </table>
+    {% endif %}<br>
+  
+    <form action="/logout">
+      <input class="button" type="submit" value="logout">
+  </form>
+</body>
+</html>
+

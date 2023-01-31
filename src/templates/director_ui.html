@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<h3 style="text-align: center;">Hello {{session['username']}}<br>Director UI</h3>
+
+<body>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+rel="stylesheet"
+integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+crossorigin="anonymous">
+<link rel="stylesheet" href={{url_for('static', filename='css/background.css') }}>
+<div class="container">
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-danger alert-dismissible fade show">
+      <button type="button" class="btn-close" data-bs-dismiss="alert"
+      aria-label="Close"></button>
+      {{ message }}
+  </div>
+  {% endfor %}
+</div>
+	<!-- <form action="/file_upload" method="POST" enctype="multipart/form-data">
+		{{ form.csrf_token() }}
+		<div>
+		  {{ form.file_name.label }}
+		</div>
+		<div>
+		  {{ form.file_name}}
+		</div>
+		<div>
+		  {{ form.upload}}
+		  {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul class=flashes>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+		  <br>
+		</div>
+		<label for="fname">File Name:</label>
+		<input type="text" name="filename" id="filename"></br></br>
+		<input type="file" id="myFile" name="myfile"></br></br>
+		<input type="submit" value="upload">
+		<div>
+		  {{ form.submit(class="btn btn-primary")}}
+		</div>
+</form> -->
+
+{% for dept in department%}<br>
+  <button class="button" type="submit">
+	<a href="/showfiles?dept={{dept.dept}}">{{dept.dept}}</a>
+  </button>
+  <br>
+
+{%endfor%}<br>
+
+
+<form action="/logout">
+	<input class="button" type="submit" value="logout">
+</form>
+</body>
+</html>

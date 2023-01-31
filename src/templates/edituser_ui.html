@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit user UI</title>
+</head>
+<link rel="stylesheet" href={{url_for('static', filename='css/background.css') }}>
+<body>
+    <p class="res"><strong>User selected: ID </strong> {{user}}</p>
+    <p class="res"><strong>User Data:</strong> {{user_cred}}</p>
+
+    <form action="/admin/edit_user" method="POST">
+        <label for="username">ID Number:</label>
+        <input type="text" name="edit_id" id="user_id" value="{{ user_cred.id }}" readonly>
+        </br></br>
+        <label for="username">Username:</label>
+        <input type="text" name="edit_username" id="username" value="{{ user_cred.username }}">
+        </br></br>
+        <label for="username">Password:</label>
+        <input type="text" name="edit_password" id="password" value="{{ user_cred.password}}">
+        </br></br>
+
+        <label for="dept">Department:</label>
+          <select id="dept" name="edit_dept" value="{{ user_cred.dept }}">
+          {% for dept in department %}
+            <option value="{{dept.dept}}">{{dept.dept}}</option>
+          {%endfor%}
+          </select>
+
+        <label for="role">Role:</label>
+          <select id="role" name="edit_role" value="{{ user_cred.role }}">
+          <option value="admin">Admin</option>
+          <option value="staff">Staff</option>
+          <option value="manager">Manager</option>
+          <option value="manager">Director</option>
+          </select>
+        </br></br>
+        <input class="button" type="submit" value="Edit User">
+    </form>
+
+</body>
+</html>

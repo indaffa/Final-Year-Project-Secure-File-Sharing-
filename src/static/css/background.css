@@ -1,0 +1,119 @@
+/* body {
+	background: lightblue;
+	background-image: url('https://img.freepik.com/free-vector/cloud-network-system-background-vector-social-media-banner_53876-111851.jpg?w=900&t=st=1673941180~exp=1673941780~hmac=5bac014bf47bd01e17e1a4cd743597fc3bbacd17f759fcfa1a131fc2932d6976');
+	background-size: cover;
+} */
+
+body {
+  /* padding: 20px; */
+  background-color: #5BB9B8;
+  /* line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  color: #fff;
+  font-size: 1.6rem;
+  font-family: 'Lato', sans-serif; */
+}
+
+th, td {
+  text-align: center-left;
+  padding: 8px;
+}
+
+
+/* tr:nth-child(odd){background-color: #ada2eb}
+tr:nth-child(even){background-color: #cdc7f0}
+tr:hover {background-color: #f5ee25;}
+th {
+  background-color: #a007de;
+  color: white;
+} */
+
+input[type="submit"] {
+  line-height: 1;
+  display: inline-block;
+  font-size: 1.2rem;
+  text-decoration: none;
+  border-radius: 5px;
+  color: #fff;
+  padding: 8px;
+  background-color: #4b908f;
+}
+
+
+tr:nth-child(odd){
+  background-color: #242e39;
+  color: #fff;
+}
+
+tr:nth-child(even){
+  background-color: #1c232b;
+  color: #fff;
+}
+tr:hover {
+	background-color: #EDEADE;
+	color: #0d0c00;
+}
+
+th {
+  background-color: #202932;
+  color: #fff;
+  border: 1px solid #202932;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.row {
+  margin-left:-5px;
+  margin-right:-5px;
+}
+  
+.column {
+  float: left;
+  width: 50%;
+  padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+#users {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 80%;
+  border: 1px solid #ddd;
+  margin-top: -180px;
+}
+
+
+#files {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 80%;
+  border: 1px solid #ddd;
+  margin-top: -250px;
+}
+
+#fileList {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 80%;
+  border: 1px solid #ddd;
+  margin-top: -250px;
+}
+
+.button {
+    border-radius:7px;
+}
+
+.button:hover {
+      background-color:#0000ff;
+	  color:#FFF;
+      transition: 0.1s;
+	  
+  }

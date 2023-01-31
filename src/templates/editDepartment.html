@@ -1,0 +1,24 @@
+<link rel="stylesheet" href={{url_for('static', filename='css/background.css') }}>
+<h2>Edit for {{dept}}</h2>
+
+<form action="/editDepartment?id={{id}}" method="POST">
+    {{ form.csrf_token() }}
+    <div>
+      {{ form.department_name.label }}
+    </div>
+    <div>
+      {{ form.department_name}}
+      <!-- {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}<br> -->
+    </div>
+
+      {{ form.submit(class="button")}}
+    </div>
+  </form>
